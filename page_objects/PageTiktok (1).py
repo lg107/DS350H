@@ -255,7 +255,7 @@ class PageTiktok(BaseCase): #inherit BaseCase
         
     def save_videos_with_hashtag(self,current_batch,predefined_hashtag_list):
         """
-        in each video in current_batch, save the video iff it contains a hashtag in the predefined hashtag list
+        in each video in current_batch, save the video if it contains a hashtag in the predefined hashtag list
         """
         num_of_posts_with_hashtag = 0
         video_saved = []
