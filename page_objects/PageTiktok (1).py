@@ -139,39 +139,39 @@ class PageTiktok(BaseCase): #inherit BaseCase
         except StaleElementReferenceException:
             self.fetch_tiktok()
         
-    def login(self):
-        """
-        not used. Manually log in instead, have to close the 2 popups on the bottom right
-        """
-        # click "use phone/number/email" on login page
-        use_email = self.chromebrowser.find_element(By.XPATH, "/html/body/div[5]/div[3]/div/div/div/div[1]/div/div/div[1]/div[2]/div[2]")
-        use_email.click()
-        # click "login with email or username"
-        self.chromebrowser.find_element(By.XPATH, "/html/body/div[5]/div[3]/div/div/div/div[1]/div[2]/form/div[1]/a").click()
-        time.sleep(1)
-        input_username = self.chromebrowser.find_element(By.XPATH, "/html/body/div[5]/div[3]/div/div/div/div[1]/div[2]/form/div[1]/input")
-        input_password = self.chromebrowser.find_element(By.XPATH, "/html/body/div[5]/div[3]/div/div/div/div[1]/div[2]/form/div[2]/div/input")
-        input_username.send_keys(self.email)
-        input_password.send_keys(self.password)
-        time.sleep(3)
-        login = self.chromebrowser.find_element(By.XPATH, "/html/body/div[5]/div[3]/div/div/div/div[1]/div[2]/form/button")
-        login.click()
+#    def login(self):
+#        """
+#        not used. Manually log in instead, have to close the 2 popups on the bottom right
+#        """
+#        # click "use phone/number/email" on login page
+#        use_email = self.chromebrowser.find_element(By.XPATH, "/html/body/div[5]/div[3]/div/div/div/div[1]/div/div/div[1]/div[2]/div[2]")
+#        use_email.click()
+#        # click "login with email or username"
+#        self.chromebrowser.find_element(By.XPATH, "/html/body/div[5]/div[3]/div/div/div/div[1]/div[2]/form/div[1]/a").click()
+#        time.sleep(1)
+#        input_username = self.chromebrowser.find_element(By.XPATH, "/html/body/div[5]/div[3]/div/div/div/div[1]/div[2]/form/div[1]/input")
+#        input_password = self.chromebrowser.find_element(By.XPATH, "/html/body/div[5]/div[3]/div/div/div/div[1]/div[2]/form/div[2]/div/input")
+#        input_username.send_keys(self.email)
+#        input_password.send_keys(self.password)
+#        time.sleep(3)
+#        login = self.chromebrowser.find_element(By.XPATH, "/html/body/div[5]/div[3]/div/div/div/div[1]/div[2]/form/button")
+#        login.click()
     
-#     def like_video(self, video):
-#         """
-#         returns if the video was successfully liked
-#         """
-#         like_successful = False
-#         try:
-#             like_button = video.find_elements(By.XPATH, ".//*[@class='css-1ok4pbl-ButtonActionItem e1hk3hf90']")[0]
-#             self.chromebrowser.execute_script("arguments[0].click();", like_button)
-#             like_successful = True
-#             print(f"Clicked button {like_button.get_attribute('aria-label')} using JavaScript")
-#             time.sleep(1)
-#         except ElementClickInterceptedException:
-#             print(f"ElementClickInterceptedException: Could not click the button")
-#             pass
-#         return like_successful
+     def like_video(self, video):
+         """
+         returns if the video was successfully liked
+         """
+         like_successful = False
+         try:
+             like_button = video.find_elements(By.XPATH, ".//*[@class='css-1ok4pbl-ButtonActionItem e1hk3hf90']")[0]
+             self.chromebrowser.execute_script("arguments[0].click();", like_button)
+             like_successful = True
+             print(f"Clicked button {like_button.get_attribute('aria-label')} using JavaScript")
+             time.sleep(1)
+         except ElementClickInterceptedException:
+             print(f"ElementClickInterceptedException: Could not click the button")
+             pass
+         return like_successful
         
     def save_video(self, video):
         """
@@ -203,23 +203,23 @@ class PageTiktok(BaseCase): #inherit BaseCase
         """
         return np.random.random() < prob
 
-#     def like_videos_random(self,current_batch):
-#         """
-#         returns if the video was successfully liked
-#         """
-#         num_of_posts_clicked = 0
-#         video_liked = []
+     def like_videos_random(self,current_batch):
+         """
+         returns if the video was successfully liked
+         """
+         num_of_posts_clicked = 0
+         video_liked = []
 
-#         current_batch_info = self.info_videos(current_batch)
-#         for video_info in current_batch_info:
-#             if self.flip(0.5):
-#                 time.sleep(0.5)
-#                 if self.like_video(video_info['video']):
-#                     video_liked.append(video_info)
-#                     num_of_posts_clicked += 1
+         current_batch_info = self.info_videos(current_batch)
+         for video_info in current_batch_info:
+             if self.flip(0.5):
+                 time.sleep(0.5)
+                 if self.like_video(video_info['video']):
+                     video_liked.append(video_info)
+                     num_of_posts_clicked += 1
         
-#         print(f"\nThere are #{len(current_batch_info)} videos \n and #{num_of_posts_clicked} posts were randomly liked successfully")
-#         return video_liked
+         print(f"\nThere are #{len(current_batch_info)} videos \n and #{num_of_posts_clicked} posts were randomly liked successfully")
+         return video_liked
         
     def save_videos_random(self,current_batch):
         '''Returns boolean indicating whether the video was successfully saved'''
@@ -235,23 +235,23 @@ class PageTiktok(BaseCase): #inherit BaseCase
         print(f"\nThere are #{len(current_batch_info)} videos \n and #{num_of_posts_clicked} posts were randomly saved successfully")
         return video_saved
          
-    # def like_videos_with_hashtag(self,current_batch,predefined_hashtag_list):
-    #     """
-    #     in each video in current_batch, like it iff it contains a hashtag in the predefined hashtag list
-    #     """
-    #     num_of_posts_with_hashtag = 0
-    #     video_liked = []
-    #     num_of_posts_clicked = 0
-    #     current_batch_info = self.info_videos(current_batch)
-    #     for video_info in current_batch_info:
-    #         if video_info["hashtag"]:
-    #             if set(video_info["hashtag"]) & set(predefined_hashtag_list):
-    #                 num_of_posts_with_hashtag += 1
-    #                 if self.like_video(video_info["video"]): #if video was successfully liked
-    #                     video_liked.append(video_info)
-    #                     num_of_posts_clicked += 1
-    #     print(f"\nThere are #{num_of_posts_with_hashtag} videos with predefined hashtags \n and #{num_of_posts_clicked} posts were liked successfully")
-    #     return video_liked
+     def like_videos_with_hashtag(self,current_batch,predefined_hashtag_list):
+         """
+         in each video in current_batch, like it iff it contains a hashtag in the predefined hashtag list
+         """
+         num_of_posts_with_hashtag = 0
+         video_liked = []
+         num_of_posts_clicked = 0
+         current_batch_info = self.info_videos(current_batch)
+         for video_info in current_batch_info:
+             if video_info["hashtag"]:
+                 if set(video_info["hashtag"]) & set(predefined_hashtag_list):
+                     num_of_posts_with_hashtag += 1
+                     if self.like_video(video_info["video"]): #if video was successfully liked
+                         video_liked.append(video_info)
+                         num_of_posts_clicked += 1
+         print(f"\nThere are #{num_of_posts_with_hashtag} videos with predefined hashtags \n and #{num_of_posts_clicked} posts were liked successfully")
+         return video_liked
         
     def save_videos_with_hashtag(self,current_batch,predefined_hashtag_list):
         """
@@ -313,22 +313,22 @@ class PageTiktok(BaseCase): #inherit BaseCase
         return (not (set(oldbatch) & set(newbatch)))
     
 
-#     def iterate_through_batches_like_by_hashtag(self, num_batches = 5):
-#         """
-#         Like posts in current batch after updating, then move on to the next batch
-#         """
-#         self.batch_num = 0
-#         while num_batches > 0:  # if new batch appeared on foryou page
-#             print(f"\n****ENTERING BATCH{6-num_batches}\n")
-#             num_batches -= 1
-#             self.batch_num += 1
-#             liked_videos = self.like_videos_with_hashtag(self.current_batch, self.predefined_hashtag_list)
-#             time.sleep(5)
-#             current_batch_info = self.info_videos(self.current_batch)
+     def iterate_through_batches_like_by_hashtag(self, num_batches = 5):
+         """
+         Like posts in current batch after updating, then move on to the next batch
+         """
+         self.batch_num = 0
+         while num_batches > 0:  # if new batch appeared on foryou page
+             print(f"\n****ENTERING BATCH{6-num_batches}\n")
+             num_batches -= 1
+             self.batch_num += 1
+             liked_videos = self.like_videos_with_hashtag(self.current_batch, self.predefined_hashtag_list)
+             time.sleep(5)
+             current_batch_info = self.info_videos(self.current_batch)
 
-#             self.write_to_csv(current_batch_info, "like_by_hashtag_data_all_videos.csv")  # all videos on page 
-#             self.write_to_csv(liked_videos, "like_by_hashtag_data_liked_videos.csv") #only the ones that were liked by hashtag
-#             self.update_batch()
+             self.write_to_csv(current_batch_info, "like_by_hashtag_data_all_videos.csv")  # all videos on page 
+             self.write_to_csv(liked_videos, "like_by_hashtag_data_liked_videos.csv") #only the ones that were liked by hashtag
+             self.update_batch()
             
     def iterate_through_batches_save_by_hashtag(self, num_batches = 5):
         """
