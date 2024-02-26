@@ -23,6 +23,13 @@ import os.path
 
 class PageTiktok(BaseCase): #inherit BaseCase
     predefined_hashtag_list = ["viral","foryou"]
+    centerleft_hashtag_list = ["liberal", "democrat", "democrats", "democraticparty", "centerleft",
+                               "center", "centrist", "centrism", "moderate", "politics", "obama", "pelosi",
+                               "clinton", "kelly", "hassan", "warnock", "murkowski", "sinema", "portman", "manchin"]
+    centerright_hashtag_list = ["republican", "republicans", "republicanparty", "centerright", "center", "centrist",
+                                "centrism", "moderate", "politics", "romney", "blunt", "shelby", "portman", "sinema",
+                                "murkowski", "collins", "manchin"]
+
     chromebrowser = Driver(uc=True)
     actions = ActionChains(chromebrowser)
     current_batch = []
@@ -253,9 +260,9 @@ class PageTiktok(BaseCase): #inherit BaseCase
          print(f"\nThere are #{num_of_posts_with_hashtag} videos with predefined hashtags \n and #{num_of_posts_clicked} posts were liked successfully")
          return video_liked
         
-    def save_videos_with_hashtag(self,current_batch,predefined_hashtag_list):
+    def save_videos_centerleft(self,current_batch,centerleft_hashtag_list):
         """
-        in each video in current_batch, save the video if it contains a hashtag in the predefined hashtag list
+        in each video in current_batch, save the video if it contains a hashtag in the centerleft hashtag list
         """
         num_of_posts_with_hashtag = 0
         video_saved = []
@@ -263,7 +270,7 @@ class PageTiktok(BaseCase): #inherit BaseCase
         current_batch_info = self.info_videos(current_batch)
         for video_info in current_batch_info:
             if video_info["hashtag"]:
-                if set(video_info["hashtag"]) & set(predefined_hashtag_list):
+                if set(video_info["hashtag"]) & set(centerleft_hashtag_list):
                     num_of_posts_with_hashtag += 1
                     if self.save_video(video_info["video"]): #if video was successfully saved
                         video_saved.append(video_info)
@@ -271,7 +278,23 @@ class PageTiktok(BaseCase): #inherit BaseCase
         print(f"\nThere are #{num_of_posts_with_hashtag} videos with predefined hashtags \n and #{num_of_posts_clicked} posts were saved successfully")
         return video_saved
 
-
+    def save_videos_centerright(self,current_batch,centerright_hashtag_list):
+        """
+        in each video in current_batch, save the video if it contains a hashtag in the centerright hashtag list
+        """
+        num_of_posts_with_hashtag = 0
+        video_saved = []
+        num_of_posts_clicked = 0
+        current_batch_info = self.info_videos(current_batch)
+        for video_info in current_batch_info:
+            if video_info["hashtag"]:
+                if set(video_info["hashtag"]) & set(centerright_hashtag_list):
+                    num_of_posts_with_hashtag += 1
+                    if self.save_video(video_info["video"]): #if video was successfully saved
+                        video_saved.append(video_info)
+                        num_of_posts_clicked += 1
+        print(f"\nThere are #{num_of_posts_with_hashtag} videos with predefined hashtags \n and #{num_of_posts_clicked} posts were saved successfully")
+        return video_saved
 
     def update_batch(self):
         """
@@ -330,7 +353,7 @@ class PageTiktok(BaseCase): #inherit BaseCase
              self.write_to_csv(liked_videos, "like_by_hashtag_data_liked_videos.csv") #only the ones that were liked by hashtag
              self.update_batch()
             
-    def iterate_through_batches_save_by_hashtag(self, num_batches = 5):
+    def iterate_through_batches_save_by_hashtag_centerleft(self, num_batches = 5):
         """
         Save posts in current batch after updating, then move on to the next batch
         """
@@ -339,7 +362,24 @@ class PageTiktok(BaseCase): #inherit BaseCase
             print(f"\n****ENTERING BATCH{6-num_batches}\n")
             num_batches -= 1
             self.batch_num += 1
-            saved_videos = self.save_videos_with_hashtag(self.current_batch, self.predefined_hashtag_list)
+            saved_videos = self.save_videos_centerleft(self.current_batch, self.centerleft_hashtag_list)
+            time.sleep(5)
+            current_batch_info = self.info_videos(self.current_batch)
+
+            self.write_to_csv(current_batch_info, "save_by_hashtag_data_all_videos.csv")  # all videos on page 
+            self.write_to_csv(saved_videos, "save_by_hashtag_data_saved_videos.csv") #only the ones that were saved by hashtag
+            self.update_batch()
+
+    def iterate_through_batches_save_by_hashtag_centerright(self, num_batches = 5):
+        """
+        Save posts in current batch after updating, then move on to the next batch
+        """
+        self.batch_num = 0
+        while num_batches > 0:  # if new batch appeared on foryou page
+            print(f"\n****ENTERING BATCH{6-num_batches}\n")
+            num_batches -= 1
+            self.batch_num += 1
+            saved_videos = self.save_videos_centerright(self.current_batch, self.centerright_hashtag_list)
             time.sleep(5)
             current_batch_info = self.info_videos(self.current_batch)
 
