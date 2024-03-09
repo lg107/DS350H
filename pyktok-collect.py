@@ -11,16 +11,17 @@ def collect_metadata(inputFile, outputFile):
     """
 
     try:
-        # with open(inputFile) as fin:
-        #     data = json.load(fin)
+        #with open(inputFile) as fin:
+        #    data = json.load(open(fin, encoding="utf8"))
         df = pd.read_json(path_or_buf=inputFile, orient='split')
     except FileNotFoundError:
         print(f"File '{inputFile}' couldn't be found.")
         return 
     
     try:
-        # urls = [entry['Link'] for entry in data['data']]
+        #urls = [entry['Link'] for entry in data['data']]
         urls = df['Link'].to_list()
+        #urls = data['Activity']['Video Browsing History']['VideoList']
         # print(len(urls))
     except:
         print("There is something wrong with the data format.")
@@ -32,6 +33,8 @@ def collect_metadata(inputFile, outputFile):
                 		       outputFile, # csv file
                 		       5) # max time sleep
     
+
+
 if __name__ == "__main__":
-    _, fin, fout = sys.argv
-    collect_metadata(fin, fout)
+    _, urls, fout = sys.argv
+    collect_metadata(urls, fout)
