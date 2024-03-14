@@ -2,6 +2,7 @@
 By: Lucia Gurrieri
 
 Advisor: Eni Mustafaraj
+
 Help from: Ashley Kang, Adelle Wang, Daisy Appiah-Kubi, Edith Po, Lillie Godinez, and Dora Li
 
 The purpose of this project is to understand how video performance statistics and characteristics can predict a high rate of video popularity, and what hashtags tend to get a higher rate of video views. I examine video metadata collected from a sample of videos from user browsing histories.
