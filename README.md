@@ -1,5 +1,6 @@
 # Data Science Major Capstone
 By: Lucia Gurrieri
+
 Advisor: Eni Mustafaraj
 Help from: Ashley Kang, Adelle Wang, Daisy Appiah-Kubi, Edith Po, Lillie Godinez, and Dora Li
 
