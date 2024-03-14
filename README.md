@@ -49,21 +49,37 @@ Run this code to install the required packages and libraries:
    
 ### 6. Run the Code
 User data should be in the form of a JSON file. The results file should be a CSV file in the appropriate directory. In the virtual environment, run the command:
+    
     python -m pyktok-collect.py (user data file) (results file)
+    
 This will create a CSV file. The code will open the specified browser (in this case, Firefox). If the TikTok video URL is valid (i.e. the video exists), the code requests to get the video's metadata as a JSON object. Then, the code returns the JSON object in string form from HTML.
+
 After collecting all data, returns a CSV file with the TikTok metadata. This includes: 
+
         1.  "Video_id": ID of the video
+        
         2.  "Video_timestamp”: Time video posted
+        
         3.  "Video_duration": Length of video (in seconds)
+        
         4.  "Video_locationcreated": Country of origin
+        
         5.  "Video_diggcount": No. likes on the video
+        
         6.  "Video_sharecount": No. shares on the video
+        
         7.  "Video_commentcount": No. comments on the video
+        
         8.  "Video_playcount": No. views on the video
+        
         9.  "Video_description": Description on the video including hashtags
+        
         10. "Video_is_ad": Boolean if video is advertisement
+        
         11. "Author_username": Username of video author
+        
         12. "Author_verified": If the author is verified
+        
 
 ## Data Analysis
 ### See Capstone_Code.R for data cleaning and analysis
